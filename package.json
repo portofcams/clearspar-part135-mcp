@@ -1,0 +1,29 @@
+{
+  "name": "clearspar-part135-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MCP server that turns Claude into a Part 135 market analyst over John's live Clearspar FAA operator dataset (1,890 active US Part 135 charter operators).",
+  "type": "module",
+  "bin": {
+    "clearspar-part135-mcp": "build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', 0o755)\"",
+    "start": "node build/index.js",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
