@@ -97,3 +97,11 @@ Restart Claude Desktop. The five tools appear under the plug icon.
 ## Live data sanity (as of build)
 
 `total = 1890` active operators · `AK = 303` · `HI = 28` · all `certType = "135"` · all `crmStatus = "NEW"`. Verified against the live endpoint; `fleetSize` ranges 1–386 nationwide (1–42 in AK).
+
+---
+
+## Work with me
+
+I'm John Thomas — I run **BlueWave Projects**, an AI build studio. I ship production MCP servers, Claude agents, and LLM-in-the-loop pipelines — usually in days, not months — over real, often regulated data (FAA Part 135, maritime AIS, Hawaii property records). USCG Master Captain; deep in aviation, maritime, and construction operations.
+
+Want Claude wired into your own data or workflow? **john@binnacleai.com** · https://bluewaveprojects.com

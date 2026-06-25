@@ -1,7 +1,8 @@
 {
   "name": "clearspar-part135-mcp",
   "version": "1.0.0",
-  "private": true,
+  "license": "MIT",
+  "mcpName": "io.github.portofcams/clearspar-part135",
   "description": "MCP server that turns Claude into a Part 135 market analyst over John's live Clearspar FAA operator dataset (1,890 active US Part 135 charter operators).",
   "type": "module",
   "bin": {
