@@ -1,0 +1,36 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.portofcams/clearspar-part135",
+  "description": "MCP server that turns Claude into a Part 135 market analyst over John's live Clearspar FAA operator dataset (1,890 active US Part 135 charter operators).",
+  "repository": {
+    "url": "https://github.com/portofcams/clearspar-part135-mcp",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "clearspar-part135-mcp",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "description": "API key for the Clearspar Part 135 data API (the DIGEST_API_KEY value).",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": true,
+          "name": "CLEARSPAR_API_KEY"
+        },
+        {
+          "description": "Base URL for the data API. Defaults to https://clearspar.binnacleai.com.",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false,
+          "name": "CLEARSPAR_BASE_URL"
+        }
+      ]
+    }
+  ]
+}
