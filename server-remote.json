@@ -1,0 +1,16 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.portofcams/clearspar-part135",
+  "description": "MCP server: Part 135 market analytics (market summary, fleet ranking, HHI competitive landscape, operator comparison, CRM pipeline) over the live Clearspar dataset of 1,890 US Part 135 charter operators. Remote Streamable HTTP, read-only, aggregate.",
+  "repository": {
+    "url": "https://github.com/portofcams/clearspar-part135-mcp",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://clearspar-part135-mcp.portofcams.com/mcp"
+    }
+  ]
+}

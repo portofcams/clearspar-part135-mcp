@@ -31,6 +31,8 @@
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { fileURLToPath } from "node:url";
+import { realpathSync } from "node:fs";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -497,14 +499,7 @@ const TOOLS = [
   },
 ] as const;
 
-const server = new Server(
-  { name: "clearspar-part135-mcp", version: "1.0.0" },
-  { capabilities: { tools: {} } }
-);
-
-server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: TOOLS.map((t) => ({ ...t, annotations: { readOnlyHint: true } })) }));
-
-server.setRequestHandler(CallToolRequestSchema, async (req) => {
+async function handleCallTool(req: { params: { name: string; arguments?: Record<string, any> } }) {
   const { name, arguments: args = {} } = req.params;
   try {
     let result: unknown;
@@ -535,9 +530,36 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => {
       content: [{ type: "text", text: `Error in ${name}: ${msg}` }],
     };
   }
-});
+}
 
+// ---------------------------------------------------------------------------
+// Server factory — shared by the stdio entry below and the HTTP entry (http.ts)
+// ---------------------------------------------------------------------------
+export function createServer(): Server {
+  const server = new Server(
+    { name: "clearspar-part135-mcp", version: "1.0.0" },
+    { capabilities: { tools: {} } }
+  );
+  server.setRequestHandler(ListToolsRequestSchema, async () => ({
+    tools: TOOLS.map((t) => ({ ...t, annotations: { readOnlyHint: true } })),
+  }));
+  server.setRequestHandler(CallToolRequestSchema, (req) => handleCallTool(req));
+  return server;
+}
+
+export const CLEARSPAR_INFO = {
+  name: "clearspar-part135-mcp",
+  version: "1.0.0",
+  dataBase: BASE_URL,
+  keyConfigured: Boolean(API_KEY),
+};
+
+// ---------------------------------------------------------------------------
+// Boot (stdio) — only when this file is run directly, so http.ts can import
+// createServer() without starting a stdio server.
+// ---------------------------------------------------------------------------
 async function main() {
+  const server = createServer();
   const transport = new StdioServerTransport();
   await server.connect(transport);
   // stderr only — stdout is the MCP stdio channel.
@@ -546,7 +568,18 @@ async function main() {
   );
 }
 
-main().catch((e) => {
-  console.error("Fatal:", e);
-  process.exit(1);
-});
+const isDirectRun = (() => {
+  if (!process.argv[1]) return false;
+  try {
+    return fileURLToPath(import.meta.url) === realpathSync(process.argv[1]);
+  } catch {
+    return false;
+  }
+})();
+
+if (isDirectRun) {
+  main().catch((e) => {
+    console.error("Fatal:", e);
+    process.exit(1);
+  });
+}

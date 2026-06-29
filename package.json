@@ -3,24 +3,31 @@
   "version": "1.0.0",
   "license": "MIT",
   "mcpName": "io.github.portofcams/clearspar-part135",
-  "description": "MCP server that turns Claude into a Part 135 market analyst over John's live Clearspar FAA operator dataset (1,890 active US Part 135 charter operators).",
+  "description": "MCP server that turns Claude into a Part 135 market analyst over John's live Clearspar FAA operator dataset (1,890 active US Part 135 charter operators). Runs over stdio (Claude Desktop) or remote Streamable HTTP.",
   "type": "module",
   "bin": {
     "clearspar-part135-mcp": "build/index.js"
   },
   "files": [
-    "build"
+    "build",
+    "PRIVACY.md"
   ],
   "scripts": {
     "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', 0o755)\"",
     "start": "node build/index.js",
+    "start:http": "node build/http.js",
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@modelcontextprotocol/sdk": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
     "@types/node": "^20.14.0",
     "typescript": "^5.4.5"
   },
